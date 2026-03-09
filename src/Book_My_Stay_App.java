@@ -42,22 +42,13 @@ class RoomInventory {
         availability = new HashMap<>();
     }
 
-
     public void registerRoom(String roomType, int count) {
         availability.put(roomType, count);
     }
 
-
     public int getAvailability(String roomType) {
         return availability.getOrDefault(roomType, 0);
     }
-
-
-    public void updateAvailability(String roomType, int change) {
-        int current = availability.getOrDefault(roomType, 0);
-        availability.put(roomType, current + change);
-    }
-
 
     public void displayInventory() {
         System.out.println("Current Room Inventory:");
@@ -73,8 +64,38 @@ public class Book_My_Stay_App {
         System.out.println("=================================");
         System.out.println("      Welcome to Book My Stay");
         System.out.println("      Hotel Booking System");
-        System.out.println("           Version 3.1");
+        System.out.println("           Version 4.0");
         System.out.println("=================================\n");
 
 
         Room single = new SingleRoom();
+        Room doubleRoom = new DoubleRoom();
+        Room suite = new SuiteRoom();
+
+
+        RoomInventory inventory = new RoomInventory();
+        inventory.registerRoom(single.name, 5);
+        inventory.registerRoom(doubleRoom.name, 3);
+        inventory.registerRoom(suite.name, 0); // Suite currently unavailable
+
+
+        System.out.println("Available Rooms for Guests:\n");
+
+        if (inventory.getAvailability(single.name) > 0) {
+            single.displayDetails();
+            System.out.println("Available: " + inventory.getAvailability(single.name) + "\n");
+        }
+
+        if (inventory.getAvailability(doubleRoom.name) > 0) {
+            doubleRoom.displayDetails();
+            System.out.println("Available: " + inventory.getAvailability(doubleRoom.name) + "\n");
+        }
+
+        if (inventory.getAvailability(suite.name) > 0) {
+            suite.displayDetails();
+            System.out.println("Available: " + inventory.getAvailability(suite.name) + "\n");
+        }
+
+        System.out.println("Room Search Complete. Inventory remains unchanged.");
+    }
+}
