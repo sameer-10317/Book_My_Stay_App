@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 abstract class Room {
     protected String name;
     protected int beds;
@@ -32,35 +34,47 @@ class SuiteRoom extends Room {
     }
 }
 
+
+class RoomInventory {
+    private HashMap<String, Integer> availability;
+
+    public RoomInventory() {
+        availability = new HashMap<>();
+    }
+
+
+    public void registerRoom(String roomType, int count) {
+        availability.put(roomType, count);
+    }
+
+
+    public int getAvailability(String roomType) {
+        return availability.getOrDefault(roomType, 0);
+    }
+
+
+    public void updateAvailability(String roomType, int change) {
+        int current = availability.getOrDefault(roomType, 0);
+        availability.put(roomType, current + change);
+    }
+
+
+    public void displayInventory() {
+        System.out.println("Current Room Inventory:");
+        for (String roomType : availability.keySet()) {
+            System.out.println(roomType + " : " + availability.get(roomType) + " available");
+        }
+    }
+}
+
 public class Book_My_Stay_App {
     public static void main(String[] args) {
 
         System.out.println("=================================");
         System.out.println("      Welcome to Book My Stay");
         System.out.println("      Hotel Booking System");
-        System.out.println("           Version 2.1");
+        System.out.println("           Version 3.1");
         System.out.println("=================================\n");
 
 
         Room single = new SingleRoom();
-        Room doubleRoom = new DoubleRoom();
-        Room suite = new SuiteRoom();
-
-
-        int availableSingleRooms = 5;
-        int availableDoubleRooms = 3;
-        int availableSuites = 2;
-
-
-        single.displayDetails();
-        System.out.println("Available: " + availableSingleRooms + "\n");
-
-        doubleRoom.displayDetails();
-        System.out.println("Available: " + availableDoubleRooms + "\n");
-
-        suite.displayDetails();
-        System.out.println("Available: " + availableSuites + "\n");
-
-        System.out.println("Room Initialization Complete.");
-    }
-}
